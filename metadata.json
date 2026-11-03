@@ -1,0 +1,6 @@
+{
+  "name": "NEWARO Brand Problem Solver & Marketing Dispatch",
+  "description": "High-impact email notification campaign platform for brand problem solvers with 400-recipient batch dispatch, customizable reorderable layout, and 10 advanced marketing attachments.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Sender</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+      padding: 40px 16px;
+      line-height: 1.5;
+    }
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 32px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+    h1 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    p.subtitle {
+      font-size: 14px;
+      color: #64748b;
+      margin-bottom: 28px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 6px;
+    }
+    label span.req {
+      color: #dc2626;
+    }
+    label span.opt {
+      color: #94a3b8;
+      font-weight: 400;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="url"],
+    textarea {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      background: #ffffff;
+      color: #0f172a;
+      transition: border-color 0.15s ease;
+      font-family: inherit;
+    }
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #0f172a;
+    }
+    textarea {
+      resize: vertical;
+    }
+    .hint {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 4px;
+    }
+    button.submit-btn {
+      width: 100%;
+      padding: 12px 20px;
+      background-color: #0f172a;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+      margin-top: 8px;
+    }
+    button.submit-btn:hover {
+      background-color: #1e293b;
+    }
+    button.submit-btn:disabled {
+      background-color: #94a3b8;
+      cursor: not-allowed;
+    }
+    .status-msg {
+      margin-top: 24px;
+      padding: 14px 16px;
+      border-radius: 6px;
+      font-size: 14px;
+      display: none;
+    }
+    .status-msg.error {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #991b1b;
+      display: block;
+    }
+    .results-section {
+      margin-top: 32px;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 24px;
+      display: none;
+    }
+    .summary-box {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .summary-item {
+      flex: 1;
+      padding: 12px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      text-align: center;
+    }
+    .summary-item .num {
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .summary-item .label {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: #64748b;
+      font-weight: 600;
+    }
+    .sent-num { color: #16a34a; }
+    .failed-num { color: #dc2626; }
+    table.results-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-top: 12px;
+    }
+    table.results-table th, table.results-table td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    table.results-table th {
+      background: #f8fafc;
+      font-weight: 600;
+      color: #475569;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .badge-sent { background: #dcfce7; color: #166534; }
+    .badge-failed { background: #fee2e2; color: #991b1b; }
+    .error-text { color: #dc2626; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Send Campaign Email</h1>
+    <p class="subtitle">Enter the email details below to send via Gmail SMTP.</p>
+
+    <form id="emailForm">
+      <!-- 1. Brand name (required) -->
+      <div class="form-group">
+        <label for="brandName">Brand name <span class="req">*</span></label>
+        <input type="text" id="brandName" name="brandName" required placeholder="e.g. Acme Corp">
+      </div>
+
+      <!-- 2. Title, also used as the email subject (required) -->
+      <div class="form-group">
+        <label for="title">Title / Email subject <span class="req">*</span></label>
+        <input type="text" id="title" name="title" required placeholder="e.g. Monthly Product Update">
+      </div>
+
+      <!-- 3. Description, multiple paragraphs allowed (required) -->
+      <div class="form-group">
+        <label for="description">Description <span class="req">*</span></label>
+        <textarea id="description" name="description" rows="5" required placeholder="Type your message here. Separate paragraphs with an empty line."></textarea>
+      </div>
+
+      <!-- 4. Link, used for the button (required, must start with http:// or https://) -->
+      <div class="form-group">
+        <label for="link">Button link <span class="req">*</span></label>
+        <input type="url" id="link" name="link" required placeholder="https://example.com/learn-more" pattern="https?://.+">
+        <div class="hint">Must start with http:// or https://</div>
+      </div>
+
+      <!-- 5. Contact email (required, valid email format) -->
+      <div class="form-group">
+        <label for="contactEmail">Contact email <span class="req">*</span></label>
+        <input type="email" id="contactEmail" name="contactEmail" required placeholder="contact@example.com">
+      </div>
+
+      <!-- 6. Image URL (optional, must start with http:// or https://) -->
+      <div class="form-group">
+        <label for="imageUrl">Image URL <span class="opt">(optional)</span></label>
+        <input type="url" id="imageUrl" name="imageUrl" placeholder="https://example.com/banner.jpg" pattern="https?://.+">
+        <div class="hint">Must start with http:// or https:// if provided.</div>
+      </div>
+
+      <!-- 7. Recipients, one email address per line (max 100, remove duplicates) -->
+      <div class="form-group">
+        <label for="recipients">Recipients <span class="req">*</span></label>
+        <textarea id="recipients" name="recipients" rows="5" required placeholder="user1@example.com&#10;user2@example.com"></textarea>
+        <div class="hint">One email address per line (maximum 100 recipients). Duplicates will be removed automatically.</div>
+      </div>
+
+      <button type="submit" id="submitBtn" class="submit-btn">Send Emails</button>
+    </form>
+
+    <div id="statusMessage" class="status-msg"></div>
+
+    <!-- Results Section -->
+    <div id="resultsSection" class="results-section">
+      <h2>Delivery Summary</h2>
+      <div class="summary-box">
+        <div class="summary-item">
+          <div class="num" id="totalCount">0</div>
+          <div class="label">Total</div>
+        </div>
+        <div class="summary-item">
+          <div class="num sent-num" id="sentCount">0</div>
+          <div class="label">Sent</div>
+        </div>
+        <div class="summary-item">
+          <div class="num failed-num" id="failedCount">0</div>
+          <div class="label">Failed</div>
+        </div>
+      </div>
+
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Recipient</th>
+            <th>Status</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody id="resultsBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('emailForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const statusMsg = document.getElementById('statusMessage');
+    const resultsSection = document.getElementById('resultsSection');
+    const totalCount = document.getElementById('totalCount');
+    const sentCount = document.getElementById('sentCount');
+    const failedCount = document.getElementById('failedCount');
+    const resultsBody = document.getElementById('resultsBody');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      statusMsg.className = 'status-msg';
+      statusMsg.style.display = 'none';
+      resultsSection.style.display = 'none';
+
+      const brandName = document.getElementById('brandName').value;
+      const title = document.getElementById('title').value;
+      const description = document.getElementById('description').value;
+      const link = document.getElementById('link').value;
+      const contactEmail = document.getElementById('contactEmail').value;
+      const imageUrl = document.getElementById('imageUrl').value;
+      const recipients = document.getElementById('recipients').value;
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending... Please wait (1.5s delay between recipients)';
+
+      try {
+        const response = await fetch('/api/send', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            brandName,
+            title,
+            description,
+            link,
+            contactEmail,
+            imageUrl,
+            recipients,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || 'Server error occurred while sending emails.');
+        }
+
+        // Populate summary
+        totalCount.textContent = data.summary.total;
+        sentCount.textContent = data.summary.sent;
+        failedCount.textContent = data.summary.failed;
+
+        // Populate results table
+        resultsBody.innerHTML = '';
+        data.results.forEach(res => {
+          const row = document.createElement('tr');
+          const isSent = res.status === 'sent';
+          row.innerHTML = `
+            <td><code>${escapeHtml(res.email)}</code></td>
+            <td><span class="badge ${isSent ? 'badge-sent' : 'badge-failed'}">${isSent ? 'SENT' : 'FAILED'}</span></td>
+            <td>${isSent ? 'Delivered' : `<span class="error-text">${escapeHtml(res.error || 'Error')}</span>`}</td>
+          `;
+          resultsBody.appendChild(row);
+        });
+
+        resultsSection.style.display = 'block';
+      } catch (err) {
+        statusMsg.textContent = err.message;
+        statusMsg.className = 'status-msg error';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Emails';
+      }
+    });
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+  </script>
+</body>
+</html>
