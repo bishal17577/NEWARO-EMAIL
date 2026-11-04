@@ -1,0 +1,75 @@
+{
+  "entities": {
+    "Contact": {
+      "title": "Contact",
+      "description": "Represents an email contact recipient saved in the vault.",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "Contact recipient email address",
+          "format": "email"
+        },
+        "addedAt": {
+          "type": "string",
+          "description": "ISO timestamp when contact was added"
+        },
+        "lastUsedAt": {
+          "type": "string",
+          "description": "ISO timestamp when email was last dispatched to"
+        },
+        "sentCount": {
+          "type": "number",
+          "description": "Total emails sent to this recipient"
+        }
+      },
+      "required": ["email", "addedAt"]
+    },
+    "Campaign": {
+      "title": "Campaign",
+      "description": "Email campaign record dispatched by brand problem solver.",
+      "type": "object",
+      "properties": {
+        "brandName": {
+          "type": "string",
+          "description": "Brand name displayed on email"
+        },
+        "title": {
+          "type": "string",
+          "description": "Campaign title and email subject"
+        },
+        "description": {
+          "type": "string",
+          "description": "Campaign content paragraphs"
+        },
+        "link": {
+          "type": "string",
+          "description": "Action URL button link"
+        },
+        "contactEmail": {
+          "type": "string",
+          "description": "Brand contact and reply-to email"
+        },
+        "recipientCount": {
+          "type": "number",
+          "description": "Number of recipients in batch"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp of campaign creation"
+        }
+      },
+      "required": ["brandName", "title", "link", "contactEmail", "recipientCount", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/contacts/{contactId}": {
+      "schema": "Contact",
+      "description": "Collection of saved campaign contacts in the vault"
+    },
+    "/campaigns/{campaignId}": {
+      "schema": "Campaign",
+      "description": "Collection of dispatched campaigns"
+    }
+  }
+}

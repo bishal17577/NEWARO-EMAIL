@@ -3,52 +3,124 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Email Sender</title>
+  <title>NEWARO Brand Campaign & Email Dispatcher</title>
   <style>
+    :root {
+      --bg: #ffffff;
+      --card-bg: #ffffff;
+      --sidebar-bg: #f8fafc;
+      --border: #e2e8f0;
+      --border-focus: #0f172a;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-sub: #334155;
+      --accent: #0f172a;
+      --accent-hover: #1e293b;
+      --success: #16a34a;
+      --success-bg: #f0fdf4;
+      --danger: #dc2626;
+      --danger-bg: #fef2f2;
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       background-color: #f8fafc;
-      color: #0f172a;
-      padding: 40px 16px;
+      color: var(--text-main);
       line-height: 1.5;
+      padding: 24px 16px;
     }
-    .container {
-      max-width: 680px;
-      margin: 0 auto;
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 32px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+    .app-header {
+      max-width: 1200px;
+      margin: 0 auto 24px auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
     }
-    h1 {
-      font-size: 22px;
+
+    .brand-title {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-badge {
+      font-size: 11px;
       font-weight: 700;
-      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: #0f172a;
+      color: #ffffff;
+      padding: 3px 8px;
+      border-radius: 4px;
     }
-    p.subtitle {
-      font-size: 14px;
-      color: #64748b;
-      margin-bottom: 28px;
+
+    .header-info {
+      font-size: 13px;
+      color: var(--text-muted);
     }
-    .form-group {
+
+    .main-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 960px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .section-desc {
+      font-size: 13px;
+      color: var(--text-muted);
       margin-bottom: 20px;
     }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
     label {
       display: block;
       font-size: 13px;
       font-weight: 600;
-      color: #334155;
+      color: var(--text-sub);
       margin-bottom: 6px;
     }
-    label span.req {
-      color: #dc2626;
-    }
-    label span.opt {
-      color: #94a3b8;
-      font-weight: 400;
-    }
+
+    label span.req { color: var(--danger); }
+    label span.opt { color: var(--text-muted); font-weight: 400; }
+
     input[type="text"],
     input[type="email"],
     input[type="url"],
@@ -56,29 +128,143 @@
       width: 100%;
       padding: 10px 12px;
       font-size: 14px;
-      border: 1px solid #cbd5e1;
+      border: 1px solid var(--border);
       border-radius: 6px;
       background: #ffffff;
-      color: #0f172a;
+      color: var(--text-main);
       transition: border-color 0.15s ease;
       font-family: inherit;
     }
+
     input:focus, textarea:focus {
       outline: none;
-      border-color: #0f172a;
+      border-color: var(--border-focus);
     }
-    textarea {
-      resize: vertical;
-    }
+
+    textarea { resize: vertical; }
+
     .hint {
       font-size: 12px;
-      color: #64748b;
+      color: var(--text-muted);
       margin-top: 4px;
     }
-    button.submit-btn {
+
+    /* Logo & Images Upload Area */
+    .dropzone {
+      border: 2px dashed #cbd5e1;
+      border-radius: 8px;
+      padding: 18px;
+      text-align: center;
+      background: #fbfcfe;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .dropzone:hover, .dropzone.dragover {
+      border-color: #0f172a;
+      background: #f1f5f9;
+    }
+
+    .dropzone-icon {
+      font-size: 24px;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .dropzone-text {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .dropzone-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Logo Preview */
+    .logo-preview-box {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: #ffffff;
+    }
+
+    .logo-preview-img {
+      max-height: 44px;
+      max-width: 120px;
+      object-fit: contain;
+      border-radius: 4px;
+    }
+
+    .logo-preview-details {
+      flex: 1;
+      font-size: 12px;
+      color: var(--text-sub);
+    }
+
+    /* Multi-image Gallery Previews */
+    .images-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .image-thumb-card {
+      position: relative;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      aspect-ratio: 1;
+      background: #f8fafc;
+    }
+
+    .image-thumb-card img {
       width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .image-remove-btn {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 20px;
+      height: 20px;
+      background: rgba(15, 23, 42, 0.85);
+      color: #ffffff;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 12px;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .image-remove-btn:hover {
+      background: #dc2626;
+    }
+
+    /* Button Actions */
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    button.btn-primary {
+      flex: 1;
       padding: 12px 20px;
-      background-color: #0f172a;
+      background-color: var(--accent);
       color: #ffffff;
       font-size: 14px;
       font-weight: 600;
@@ -86,201 +272,828 @@
       border-radius: 6px;
       cursor: pointer;
       transition: background-color 0.15s ease;
-      margin-top: 8px;
     }
-    button.submit-btn:hover {
-      background-color: #1e293b;
+
+    button.btn-primary:hover {
+      background-color: var(--accent-hover);
     }
-    button.submit-btn:disabled {
+
+    button.btn-primary:disabled {
       background-color: #94a3b8;
       cursor: not-allowed;
     }
-    .status-msg {
-      margin-top: 24px;
-      padding: 14px 16px;
-      border-radius: 6px;
+
+    button.btn-secondary {
+      padding: 12px 18px;
+      background-color: #ffffff;
+      color: var(--text-main);
       font-size: 14px;
-      display: none;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
     }
-    .status-msg.error {
-      background: #fef2f2;
-      border: 1px solid #fecaca;
-      color: #991b1b;
-      display: block;
+
+    button.btn-secondary:hover {
+      background-color: #f8fafc;
+      border-color: #cbd5e1;
     }
-    .results-section {
-      margin-top: 32px;
-      border-top: 1px solid #e2e8f0;
-      padding-top: 24px;
-      display: none;
-    }
-    .summary-box {
+
+    /* Contact Vault Sidebar */
+    .quick-selectors {
       display: flex;
-      gap: 16px;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .quick-btn {
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      background: #f1f5f9;
+      color: var(--text-sub);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .quick-btn:hover {
+      background: #e2e8f0;
+      color: var(--text-main);
+    }
+
+    .quick-btn.active {
+      background: #0f172a;
+      color: #ffffff;
+      border-color: #0f172a;
+    }
+
+    .contacts-list-container {
+      max-height: 280px;
+      overflow-y: auto;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: #ffffff;
       margin-bottom: 16px;
     }
-    .summary-item {
-      flex: 1;
-      padding: 12px;
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 13px;
+    }
+
+    .contact-item:last-child {
+      border-bottom: none;
+    }
+
+    .contact-item:hover {
       background: #f8fafc;
-      border: 1px solid #e2e8f0;
+    }
+
+    .contact-email {
+      flex: 1;
+      font-family: monospace;
+      color: var(--text-main);
+      word-break: break-all;
+    }
+
+    .contact-badge {
+      font-size: 10px;
+      color: var(--text-muted);
+      background: #f1f5f9;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    /* Modal / Preview Drawer */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.6);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #ffffff;
+      border-radius: 12px;
+      max-width: 680px;
+      width: 100%;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    .modal-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .modal-close-btn {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+
+    .modal-body {
+      padding: 20px;
+      overflow-y: auto;
+      flex: 1;
+      background: #f8fafc;
+    }
+
+    .preview-frame {
+      width: 100%;
+      min-height: 480px;
+      border: none;
+      background: #ffffff;
+      border-radius: 8px;
+    }
+
+    /* Progress & Summary */
+    .progress-box {
+      margin-top: 20px;
+      padding: 16px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: none;
+    }
+
+    .progress-bar-wrap {
+      width: 100%;
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 10px 0 6px 0;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: #0f172a;
+      transition: width 0.3s ease;
+    }
+
+    .summary-boxes {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .summary-box {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 12px;
       border-radius: 6px;
       text-align: center;
     }
-    .summary-item .num {
-      font-size: 20px;
-      font-weight: 700;
+
+    .summary-num {
+      font-size: 22px;
+      font-weight: 800;
     }
-    .summary-item .label {
+
+    .summary-label {
       font-size: 11px;
       text-transform: uppercase;
-      color: #64748b;
-      font-weight: 600;
+      font-weight: 700;
+      color: var(--text-muted);
     }
-    .sent-num { color: #16a34a; }
-    .failed-num { color: #dc2626; }
+
+    .num-sent { color: var(--success); }
+    .num-failed { color: var(--danger); }
+
     table.results-table {
       width: 100%;
       border-collapse: collapse;
       font-size: 13px;
       margin-top: 12px;
     }
+
     table.results-table th, table.results-table td {
-      padding: 10px 12px;
+      padding: 8px 10px;
       text-align: left;
-      border-bottom: 1px solid #f1f5f9;
+      border-bottom: 1px solid var(--border);
     }
+
     table.results-table th {
-      background: #f8fafc;
+      background: #f1f5f9;
       font-weight: 600;
-      color: #475569;
+      color: var(--text-sub);
     }
+
     .badge {
       display: inline-block;
-      padding: 2px 8px;
+      padding: 2px 6px;
       border-radius: 4px;
-      font-size: 11px;
-      font-weight: 600;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
     }
-    .badge-sent { background: #dcfce7; color: #166534; }
-    .badge-failed { background: #fee2e2; color: #991b1b; }
-    .error-text { color: #dc2626; font-size: 12px; }
+
+    .badge-sent { background: var(--success-bg); color: #166534; }
+    .badge-failed { background: var(--danger-bg); color: #991b1b; }
+
+    .status-msg {
+      margin-top: 16px;
+      padding: 12px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      display: none;
+    }
+
+    .status-msg.error {
+      background: var(--danger-bg);
+      border: 1px solid #fecaca;
+      color: #991b1b;
+      display: block;
+    }
+    .status-msg.success {
+      background: var(--success-bg);
+      border: 1px solid #bbf7d0;
+      color: #166534;
+      display: block;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Send Campaign Email</h1>
-    <p class="subtitle">Enter the email details below to send via Gmail SMTP.</p>
 
-    <form id="emailForm">
-      <!-- 1. Brand name (required) -->
-      <div class="form-group">
-        <label for="brandName">Brand name <span class="req">*</span></label>
-        <input type="text" id="brandName" name="brandName" required placeholder="e.g. Acme Corp">
+  <header class="app-header">
+    <div class="brand-title">
+      NEWARO
+      <span class="brand-badge">Brand Campaign Hub</span>
+    </div>
+    <div class="header-info">
+      Clean White Engine &bull; Zero Spam Identity &bull; Max 400 Emails
+    </div>
+  </header>
+
+  <div class="main-grid">
+    <!-- Left Column: Campaign Form -->
+    <div class="card">
+      <div class="section-title">
+        <span>Email Campaign Details</span>
       </div>
+      <p class="section-desc">Compose high-deliverability notification emails for clients, bosses, and teams.</p>
 
-      <!-- 2. Title, also used as the email subject (required) -->
-      <div class="form-group">
-        <label for="title">Title / Email subject <span class="req">*</span></label>
-        <input type="text" id="title" name="title" required placeholder="e.g. Monthly Product Update">
-      </div>
-
-      <!-- 3. Description, multiple paragraphs allowed (required) -->
-      <div class="form-group">
-        <label for="description">Description <span class="req">*</span></label>
-        <textarea id="description" name="description" rows="5" required placeholder="Type your message here. Separate paragraphs with an empty line."></textarea>
-      </div>
-
-      <!-- 4. Link, used for the button (required, must start with http:// or https://) -->
-      <div class="form-group">
-        <label for="link">Button link <span class="req">*</span></label>
-        <input type="url" id="link" name="link" required placeholder="https://example.com/learn-more" pattern="https?://.+">
-        <div class="hint">Must start with http:// or https://</div>
-      </div>
-
-      <!-- 5. Contact email (required, valid email format) -->
-      <div class="form-group">
-        <label for="contactEmail">Contact email <span class="req">*</span></label>
-        <input type="email" id="contactEmail" name="contactEmail" required placeholder="contact@example.com">
-      </div>
-
-      <!-- 6. Image URL (optional, must start with http:// or https://) -->
-      <div class="form-group">
-        <label for="imageUrl">Image URL <span class="opt">(optional)</span></label>
-        <input type="url" id="imageUrl" name="imageUrl" placeholder="https://example.com/banner.jpg" pattern="https?://.+">
-        <div class="hint">Must start with http:// or https:// if provided.</div>
-      </div>
-
-      <!-- 7. Recipients, one email address per line (max 100, remove duplicates) -->
-      <div class="form-group">
-        <label for="recipients">Recipients <span class="req">*</span></label>
-        <textarea id="recipients" name="recipients" rows="5" required placeholder="user1@example.com&#10;user2@example.com"></textarea>
-        <div class="hint">One email address per line (maximum 100 recipients). Duplicates will be removed automatically.</div>
-      </div>
-
-      <button type="submit" id="submitBtn" class="submit-btn">Send Emails</button>
-    </form>
-
-    <div id="statusMessage" class="status-msg"></div>
-
-    <!-- Results Section -->
-    <div id="resultsSection" class="results-section">
-      <h2>Delivery Summary</h2>
-      <div class="summary-box">
-        <div class="summary-item">
-          <div class="num" id="totalCount">0</div>
-          <div class="label">Total</div>
+      <form id="emailForm">
+        <!-- 1. Brand Name -->
+        <div class="form-group">
+          <label for="brandName">Brand Name <span class="req">*</span></label>
+          <input type="text" id="brandName" name="brandName" required placeholder="e.g. NEWARO Problem Solver">
+          <div class="hint">Will appear as the sender name and top brand marker.</div>
         </div>
-        <div class="summary-item">
-          <div class="num sent-num" id="sentCount">0</div>
-          <div class="label">Sent</div>
+
+        <!-- 2. Brand Logo Upload -->
+        <div class="form-group">
+          <label>Brand Logo <span class="opt">(drag & drop or click to upload)</span></label>
+          <div class="dropzone" id="logoDropzone">
+            <span class="dropzone-icon">🖼️</span>
+            <div class="dropzone-text">Click or drop brand logo here</div>
+            <div class="dropzone-sub">PNG, JPG, SVG, WebP (max 4MB)</div>
+            <input type="file" id="logoFileInput" accept="image/*" style="display: none;">
+          </div>
+          <div id="logoPreviewContainer" style="display: none;"></div>
         </div>
-        <div class="summary-item">
-          <div class="num failed-num" id="failedCount">0</div>
-          <div class="label">Failed</div>
+
+        <!-- 3. Title / Subject -->
+        <div class="form-group">
+          <label for="title">Title / Email Subject <span class="req">*</span></label>
+          <input type="text" id="title" name="title" required placeholder="e.g. Quarterly Team Office Strategy & Brand Solutions">
+        </div>
+
+        <!-- 4. Description -->
+        <div class="form-group">
+          <label for="description">Description <span class="req">*</span></label>
+          <textarea id="description" name="description" rows="5" required placeholder="Type your campaign message here. Separate multiple paragraphs with an empty line."></textarea>
+        </div>
+
+        <!-- 5. Button Link -->
+        <div class="form-group">
+          <label for="link">Button Action Link <span class="req">*</span></label>
+          <input type="url" id="link" name="link" required placeholder="https://newaro.com/problem-solver" pattern="https?://.+">
+          <div class="hint">Must start with http:// or https://</div>
+        </div>
+
+        <!-- 6. Contact Email -->
+        <div class="form-group">
+          <label for="contactEmail">Contact / Reply-To Email <span class="req">*</span></label>
+          <input type="email" id="contactEmail" name="contactEmail" required placeholder="contact@newaro.com">
+          <div class="hint">Shown in footer ("Questions? Contact...") and used for Reply-To.</div>
+        </div>
+
+        <!-- 7. Upload up to 10 Images -->
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <label style="margin: 0;">Campaign Images Gallery <span class="opt">(up to 10 images)</span></label>
+            <span id="imageCountBadge" style="font-size: 11px; font-weight: 700; color: #64748b;">0 / 10 images</span>
+          </div>
+          <div class="dropzone" id="galleryDropzone">
+            <span class="dropzone-icon">📁</span>
+            <div class="dropzone-text">Click or drop images here</div>
+            <div class="dropzone-sub">Upload up to 10 photos, portfolios, product screenshots</div>
+            <input type="file" id="galleryFileInput" accept="image/*" multiple style="display: none;">
+          </div>
+          <div class="images-grid" id="galleryPreviewGrid"></div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="btn-row">
+          <button type="button" id="previewBtn" class="btn-secondary">Preview Email</button>
+          <button type="submit" id="submitBtn" class="btn-primary">Send to Selected Recipients</button>
+        </div>
+      </form>
+
+      <div id="statusMessage" class="status-msg"></div>
+
+      <!-- Real-time Progress Box -->
+      <div id="progressBox" class="progress-box">
+        <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 600;">
+          <span id="progressText">Dispatching emails...</span>
+          <span id="progressPercent">0%</span>
+        </div>
+        <div class="progress-bar-wrap">
+          <div id="progressBarFill" class="progress-bar-fill"></div>
         </div>
       </div>
 
-      <table class="results-table">
-        <thead>
-          <tr>
-            <th>Recipient</th>
-            <th>Status</th>
-            <th>Details</th>
-          </tr>
-        </thead>
-        <tbody id="resultsBody"></tbody>
-      </table>
+      <!-- Results & Delivery Summary -->
+      <div id="resultsSection" style="margin-top: 24px; display: none;">
+        <h3 style="font-size: 15px; font-weight: 700; margin-bottom: 8px;">Delivery Report</h3>
+        <div class="summary-boxes">
+          <div class="summary-box">
+            <div class="summary-num" id="totalCount">0</div>
+            <div class="summary-label">Total</div>
+          </div>
+          <div class="summary-box">
+            <div class="summary-num num-sent" id="sentCount">0</div>
+            <div class="summary-label">Delivered</div>
+          </div>
+          <div class="summary-box">
+            <div class="summary-num num-failed" id="failedCount">0</div>
+            <div class="summary-label">Failed</div>
+          </div>
+        </div>
+
+        <table class="results-table">
+          <thead>
+            <tr>
+              <th>Recipient</th>
+              <th>Status</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody id="resultsBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Right Column: Recipients & Contact Vault -->
+    <div class="card">
+      <div class="section-title">
+        <span>Recipient Vault</span>
+        <span id="recipientCountBadge" style="font-size: 12px; font-weight: 700; color: var(--text-muted);">0 selected</span>
+      </div>
+      <p class="section-desc">Manage customer and worker lists. Auto-saves all dispatched addresses into persistent storage.</p>
+
+      <!-- One-click Quick Selectors -->
+      <label>Quick Select Batch:</label>
+      <div class="quick-selectors">
+        <button type="button" class="quick-btn" id="btnSelectAll">All Saved</button>
+        <button type="button" class="quick-btn" id="btnSelect10">First 10</button>
+        <button type="button" class="quick-btn" id="btnSelect30">Office 30</button>
+        <button type="button" class="quick-btn" id="btnSelect40">First 40</button>
+        <button type="button" class="quick-btn" id="btnClearSelected">Clear</button>
+      </div>
+
+      <!-- Saved Contacts List -->
+      <label>Saved Contacts Vault:</label>
+      <div class="contacts-list-container" id="contactsList">
+        <div style="padding: 16px; text-align: center; color: #94a3b8; font-size: 13px;">
+          Loading saved contacts...
+        </div>
+      </div>
+
+      <!-- Active Recipients Textarea -->
+      <div class="form-group">
+        <label for="recipients">Active Campaign Recipients <span class="req">*</span></label>
+        <textarea id="recipients" name="recipients" rows="6" placeholder="bishal@gmail.com, nepalo@gmail.com&#10;or one per line (up to 400 emails)"></textarea>
+        <div class="hint">Type, paste CSV, or click Quick Select buttons above. Duplicates automatically filtered.</div>
+      </div>
+
+      <!-- Bulk Add to Vault -->
+      <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border);">
+        <label>Import New Contacts to Vault:</label>
+        <div style="display: flex; gap: 8px;">
+          <input type="text" id="bulkAddInput" placeholder="paste emails separated by commas or spaces">
+          <button type="button" id="btnBulkAdd" class="btn-secondary" style="padding: 8px 14px; font-size: 13px; white-space: nowrap;">+ Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Email Preview Modal -->
+  <div id="previewModal" class="modal-backdrop">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">Live Campaign Email Preview</div>
+        <button type="button" id="modalCloseBtn" class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <iframe id="previewIframe" class="preview-frame" sandbox="allow-same-origin"></iframe>
+      </div>
     </div>
   </div>
 
   <script>
+    // State
+    let uploadedLogoBase64 = null;
+    let uploadedImages = []; // Array of base64 strings
+    let savedContacts = [];
+
+    // DOM Elements
     const form = document.getElementById('emailForm');
     const submitBtn = document.getElementById('submitBtn');
+    const previewBtn = document.getElementById('previewBtn');
     const statusMsg = document.getElementById('statusMessage');
+    const recipientsInput = document.getElementById('recipients');
+    const contactsListEl = document.getElementById('contactsList');
+    const recipientCountBadge = document.getElementById('recipientCountBadge');
+    const imageCountBadge = document.getElementById('imageCountBadge');
+    
+    // Logo elements
+    const logoDropzone = document.getElementById('logoDropzone');
+    const logoFileInput = document.getElementById('logoFileInput');
+    const logoPreviewContainer = document.getElementById('logoPreviewContainer');
+
+    // Gallery elements
+    const galleryDropzone = document.getElementById('galleryDropzone');
+    const galleryFileInput = document.getElementById('galleryFileInput');
+    const galleryPreviewGrid = document.getElementById('galleryPreviewGrid');
+
+    // Preview Modal
+    const previewModal = document.getElementById('previewModal');
+    const previewIframe = document.getElementById('previewIframe');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+
+    // Results & Progress
+    const progressBox = document.getElementById('progressBox');
+    const progressText = document.getElementById('progressText');
+    const progressPercent = document.getElementById('progressPercent');
+    const progressBarFill = document.getElementById('progressBarFill');
     const resultsSection = document.getElementById('resultsSection');
     const totalCount = document.getElementById('totalCount');
     const sentCount = document.getElementById('sentCount');
     const failedCount = document.getElementById('failedCount');
     const resultsBody = document.getElementById('resultsBody');
 
-    form.addEventListener('submit', async (e) => {
+    // 1. Fetch Saved Contacts
+    async function fetchContacts() {
+      try {
+        const res = await fetch('/api/contacts');
+        const data = await res.json();
+        savedContacts = data.contacts || [];
+        renderContactsList();
+      } catch (err) {
+        console.error('Error fetching contacts:', err);
+      }
+    }
+
+    function renderContactsList() {
+      if (savedContacts.length === 0) {
+        contactsListEl.innerHTML = '<div style="padding: 16px; text-align: center; color: #94a3b8; font-size: 13px;">No saved contacts yet. Add above or send emails to auto-save.</div>';
+        return;
+      }
+
+      const activeSet = new Set(parseRecipients(recipientsInput.value).map(e => e.toLowerCase()));
+
+      contactsListEl.innerHTML = savedContacts.map(c => {
+        const isChecked = activeSet.has(c.email.toLowerCase());
+        return `
+          <div class="contact-item">
+            <input type="checkbox" class="contact-checkbox" data-email="${escapeHtml(c.email)}" ${isChecked ? 'checked' : ''}>
+            <span class="contact-email">${escapeHtml(c.email)}</span>
+            <span class="contact-badge">${c.sentCount || 1} sent</span>
+          </div>
+        `;
+      }).join('');
+
+      // Wire checkboxes
+      contactsListEl.querySelectorAll('.contact-checkbox').forEach(cb => {
+        cb.addEventListener('change', (e) => {
+          const email = e.target.getAttribute('data-email');
+          const current = parseRecipients(recipientsInput.value);
+          if (e.target.checked) {
+            if (!current.some(x => x.toLowerCase() === email.toLowerCase())) {
+              current.push(email);
+            }
+          } else {
+            const idx = current.findIndex(x => x.toLowerCase() === email.toLowerCase());
+            if (idx !== -1) current.splice(idx, 1);
+          }
+          recipientsInput.value = current.join('\n');
+          updateRecipientCount();
+        });
+      });
+    }
+
+    // Helper: Parse Recipients
+    function parseRecipients(text) {
+      if (!text) return [];
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const seen = new Set();
+      const list = [];
+
+      text.split(/[\r\n,;]+/).forEach(raw => {
+        const clean = raw.trim();
+        if (clean && emailRegex.test(clean)) {
+          const lower = clean.toLowerCase();
+          if (!seen.has(lower)) {
+            seen.add(lower);
+            list.push(clean);
+          }
+        }
+      });
+      return list;
+    }
+
+    function updateRecipientCount() {
+      const parsed = parseRecipients(recipientsInput.value);
+      recipientCountBadge.textContent = `${parsed.length} selected`;
+      // Update check states in contacts list
+      const activeSet = new Set(parsed.map(e => e.toLowerCase()));
+      contactsListEl.querySelectorAll('.contact-checkbox').forEach(cb => {
+        const email = cb.getAttribute('data-email');
+        cb.checked = activeSet.has(email.toLowerCase());
+      });
+    }
+
+    recipientsInput.addEventListener('input', updateRecipientCount);
+
+    // Quick Selector Handlers
+    document.getElementById('btnSelectAll').addEventListener('click', () => {
+      const emails = savedContacts.map(c => c.email);
+      recipientsInput.value = emails.join('\n');
+      updateRecipientCount();
+    });
+
+    document.getElementById('btnSelect10').addEventListener('click', () => {
+      const emails = savedContacts.slice(0, 10).map(c => c.email);
+      recipientsInput.value = emails.join('\n');
+      updateRecipientCount();
+    });
+
+    document.getElementById('btnSelect30').addEventListener('click', () => {
+      const emails = savedContacts.slice(0, 30).map(c => c.email);
+      recipientsInput.value = emails.join('\n');
+      updateRecipientCount();
+    });
+
+    document.getElementById('btnSelect40').addEventListener('click', () => {
+      const emails = savedContacts.slice(0, 40).map(c => c.email);
+      recipientsInput.value = emails.join('\n');
+      updateRecipientCount();
+    });
+
+    document.getElementById('btnClearSelected').addEventListener('click', () => {
+      recipientsInput.value = '';
+      updateRecipientCount();
+    });
+
+    // Bulk Add to Vault
+    document.getElementById('btnBulkAdd').addEventListener('click', async () => {
+      const input = document.getElementById('bulkAddInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      try {
+        const res = await fetch('/api/contacts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ emails: text }),
+        });
+        const data = await res.json();
+        if (res.ok) {
+          savedContacts = data.contacts || [];
+          renderContactsList();
+          input.value = '';
+          showMessage(`Added ${data.addedCount} contacts to vault.`, 'success');
+        } else {
+          showMessage(data.error || 'Failed to add contacts', 'error');
+        }
+      } catch (err) {
+        showMessage(err.message, 'error');
+      }
+    });
+
+    // 2. Logo Upload Handlers
+    logoDropzone.addEventListener('click', () => logoFileInput.click());
+    logoDropzone.addEventListener('dragover', (e) => { e.preventDefault(); logoDropzone.classList.add('dragover'); });
+    logoDropzone.addEventListener('dragleave', () => logoDropzone.classList.remove('dragover'));
+    logoDropzone.addEventListener('drop', (e) => {
       e.preventDefault();
+      logoDropzone.classList.remove('dragover');
+      if (e.dataTransfer.files.length > 0) {
+        handleLogoFile(e.dataTransfer.files[0]);
+      }
+    });
+    logoFileInput.addEventListener('change', (e) => {
+      if (e.target.files.length > 0) {
+        handleLogoFile(e.target.files[0]);
+      }
+    });
 
-      statusMsg.className = 'status-msg';
-      statusMsg.style.display = 'none';
-      resultsSection.style.display = 'none';
+    function handleLogoFile(file) {
+      if (!file.type.startsWith('image/')) {
+        showMessage('Please choose a valid image file for logo', 'error');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        uploadedLogoBase64 = e.target.result;
+        logoDropzone.style.display = 'none';
+        logoPreviewContainer.style.display = 'block';
+        logoPreviewContainer.innerHTML = `
+          <div class="logo-preview-box">
+            <img src="${uploadedLogoBase64}" class="logo-preview-img" alt="Brand Logo">
+            <div class="logo-preview-details">
+              <strong>${escapeHtml(file.name)}</strong> (${(file.size / 1024).toFixed(1)} KB)
+            </div>
+            <button type="button" class="quick-btn" id="btnRemoveLogo">Remove</button>
+          </div>
+        `;
+        document.getElementById('btnRemoveLogo').addEventListener('click', () => {
+          uploadedLogoBase64 = null;
+          logoFileInput.value = '';
+          logoPreviewContainer.style.display = 'none';
+          logoDropzone.style.display = 'block';
+        });
+      };
+      reader.readAsDataURL(file);
+    }
 
+    // 3. Multi-image Gallery Upload Handlers (up to 10 images)
+    galleryDropzone.addEventListener('click', () => galleryFileInput.click());
+    galleryDropzone.addEventListener('dragover', (e) => { e.preventDefault(); galleryDropzone.classList.add('dragover'); });
+    galleryDropzone.addEventListener('dragleave', () => galleryDropzone.classList.remove('dragover'));
+    galleryDropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      galleryDropzone.classList.remove('dragover');
+      handleGalleryFiles(Array.from(e.dataTransfer.files));
+    });
+    galleryFileInput.addEventListener('change', (e) => {
+      handleGalleryFiles(Array.from(e.target.files));
+    });
+
+    function handleGalleryFiles(files) {
+      const remainingSlots = 10 - uploadedImages.length;
+      if (remainingSlots <= 0) {
+        showMessage('Maximum 10 images reached.', 'error');
+        return;
+      }
+
+      const validFiles = files.filter(f => f.type.startsWith('image/')).slice(0, remainingSlots);
+
+      validFiles.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          if (uploadedImages.length < 10) {
+            uploadedImages.push(e.target.result);
+            renderGalleryPreviews();
+          }
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function renderGalleryPreviews() {
+      imageCountBadge.textContent = `${uploadedImages.length} / 10 images`;
+      galleryPreviewGrid.innerHTML = uploadedImages.map((src, idx) => `
+        <div class="image-thumb-card">
+          <img src="${src}" alt="Thumb ${idx + 1}">
+          <button type="button" class="image-remove-btn" onclick="removeGalleryImage(${idx})">&times;</button>
+        </div>
+      `).join('');
+    }
+
+    window.removeGalleryImage = function(idx) {
+      uploadedImages.splice(idx, 1);
+      renderGalleryPreviews();
+    };
+
+    // 4. Live Preview Modal
+    previewBtn.addEventListener('click', async () => {
       const brandName = document.getElementById('brandName').value;
       const title = document.getElementById('title').value;
       const description = document.getElementById('description').value;
       const link = document.getElementById('link').value;
       const contactEmail = document.getElementById('contactEmail').value;
-      const imageUrl = document.getElementById('imageUrl').value;
-      const recipients = document.getElementById('recipients').value;
 
+      try {
+        const res = await fetch('/api/preview', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            brandName: brandName || 'NEWARO Problem Solver',
+            title: title || 'Executive Campaign Update',
+            description: description || 'Here is an overview of the brand strategic plan and office solutions.\n\nEverything is set for seamless customer delivery.',
+            link: link || 'https://newaro.com',
+            contactEmail: contactEmail || 'contact@newaro.com',
+            logo: uploadedLogoBase64 || undefined,
+            images: uploadedImages,
+          }),
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          previewModal.classList.add('open');
+          const doc = previewIframe.contentDocument || previewIframe.contentWindow.document;
+          doc.open();
+          doc.write(data.html);
+          doc.close();
+        } else {
+          showMessage(data.error || 'Preview failed', 'error');
+        }
+      } catch (err) {
+        showMessage(err.message, 'error');
+      }
+    });
+
+    modalCloseBtn.addEventListener('click', () => previewModal.classList.remove('open'));
+    previewModal.addEventListener('click', (e) => {
+      if (e.target === previewModal) previewModal.classList.remove('open');
+    });
+
+    // 5. Send Campaign Execution
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const brandName = document.getElementById('brandName').value.trim();
+      const title = document.getElementById('title').value.trim();
+      const description = document.getElementById('description').value.trim();
+      const link = document.getElementById('link').value.trim();
+      const contactEmail = document.getElementById('contactEmail').value.trim();
+      const recipients = recipientsInput.value.trim();
+
+      const parsedRecipients = parseRecipients(recipients);
+      if (parsedRecipients.length === 0) {
+        showMessage('Please provide at least one valid recipient email.', 'error');
+        return;
+      }
+
+      if (parsedRecipients.length > 400) {
+        showMessage('Maximum 400 recipients allowed in a single batch.', 'error');
+        return;
+      }
+
+      // Lock UI
       submitBtn.disabled = true;
-      submitBtn.textContent = 'Sending... Please wait (1.5s delay between recipients)';
+      submitBtn.textContent = `Sending to ${parsedRecipients.length} recipients...`;
+      statusMsg.style.display = 'none';
+      resultsSection.style.display = 'none';
+      progressBox.style.display = 'block';
+
+      // Progress animation simulation during 1.5s delay
+      const total = parsedRecipients.length;
+      let currentProgress = 0;
+      const progressInterval = setInterval(() => {
+        if (currentProgress < total) {
+          currentProgress += 0.5;
+          const pct = Math.min(Math.round((currentProgress / total) * 100), 98);
+          progressBarFill.style.width = pct + '%';
+          progressPercent.textContent = pct + '%';
+          progressText.textContent = `Delivering emails (${Math.floor(currentProgress)}/${total})...`;
+        }
+      }, 750);
 
       try {
         const response = await fetch('/api/send', {
@@ -292,10 +1105,16 @@
             description,
             link,
             contactEmail,
-            imageUrl,
-            recipients,
+            logo: uploadedLogoBase64 || undefined,
+            images: uploadedImages,
+            recipients: parsedRecipients.join('\n'),
           }),
         });
+
+        clearInterval(progressInterval);
+        progressBarFill.style.width = '100%';
+        progressPercent.textContent = '100%';
+        progressText.textContent = 'Batch completed!';
 
         const data = await response.json();
 
@@ -303,12 +1122,12 @@
           throw new Error(data.error || 'Server error occurred while sending emails.');
         }
 
-        // Populate summary
+        // Summary
         totalCount.textContent = data.summary.total;
         sentCount.textContent = data.summary.sent;
         failedCount.textContent = data.summary.failed;
 
-        // Populate results table
+        // Results Table
         resultsBody.innerHTML = '';
         data.results.forEach(res => {
           const row = document.createElement('tr');
@@ -316,20 +1135,30 @@
           row.innerHTML = `
             <td><code>${escapeHtml(res.email)}</code></td>
             <td><span class="badge ${isSent ? 'badge-sent' : 'badge-failed'}">${isSent ? 'SENT' : 'FAILED'}</span></td>
-            <td>${isSent ? 'Delivered' : `<span class="error-text">${escapeHtml(res.error || 'Error')}</span>`}</td>
+            <td>${isSent ? 'Delivered via Gmail SMTP' : `<span style="color: var(--danger);">${escapeHtml(res.error || 'Error')}</span>`}</td>
           `;
           resultsBody.appendChild(row);
         });
 
         resultsSection.style.display = 'block';
+        showMessage(`Campaign completed: ${data.summary.sent} delivered, ${data.summary.failed} failed.`, data.summary.failed === 0 ? 'success' : 'error');
+
+        // Refresh contacts to show updated counts
+        fetchContacts();
       } catch (err) {
-        statusMsg.textContent = err.message;
-        statusMsg.className = 'status-msg error';
+        clearInterval(progressInterval);
+        showMessage(err.message, 'error');
       } finally {
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Send Emails';
+        submitBtn.textContent = 'Send to Selected Recipients';
       }
     });
+
+    function showMessage(msg, type) {
+      statusMsg.textContent = msg;
+      statusMsg.className = `status-msg ${type}`;
+      statusMsg.style.display = 'block';
+    }
 
     function escapeHtml(str) {
       if (!str) return '';
@@ -340,6 +1169,9 @@
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#039;');
     }
+
+    // Init
+    fetchContacts();
   </script>
 </body>
 </html>

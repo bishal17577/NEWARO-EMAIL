@@ -1,0 +1,29 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default-deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Contacts collection rules
+    match /contacts/{contactId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn() && isValidId(contactId);
+    }
+
+    // Campaigns collection rules
+    match /campaigns/{campaignId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn() && isValidId(campaignId);
+    }
+  }
+}
